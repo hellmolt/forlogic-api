@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForLogic.AvaliacaoAPI", "Fo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForLogic.RelatorioApi", "ForLogic.RelatorioApi\ForLogic.RelatorioApi.csproj", "{314AA6E7-A17F-45DF-B691-478C5ECA5622}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{E79054F9-1F50-41BC-BD9D-48D8A532C23D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{4735FFDA-32DA-4525-92CD-0FB2F96558DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForLogic.IdentityServer", "ForLogic.IdentityServer\ForLogic.IdentityServer.csproj", "{237EBD53-9718-4693-A72A-2CD70476ABFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{314AA6E7-A17F-45DF-B691-478C5ECA5622}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{314AA6E7-A17F-45DF-B691-478C5ECA5622}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{314AA6E7-A17F-45DF-B691-478C5ECA5622}.Release|Any CPU.Build.0 = Release|Any CPU
+		{237EBD53-9718-4693-A72A-2CD70476ABFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{237EBD53-9718-4693-A72A-2CD70476ABFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{237EBD53-9718-4693-A72A-2CD70476ABFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{237EBD53-9718-4693-A72A-2CD70476ABFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{7D9D1362-AD3E-4325-95C5-BB42AF7CEE30} = {ECA27928-B5D2-4F98-BC84-00218B7B3917}
 		{E7E0CA66-7150-45CC-BFD2-548AC973769F} = {ECA27928-B5D2-4F98-BC84-00218B7B3917}
 		{314AA6E7-A17F-45DF-B691-478C5ECA5622} = {ECA27928-B5D2-4F98-BC84-00218B7B3917}
+		{237EBD53-9718-4693-A72A-2CD70476ABFE} = {4735FFDA-32DA-4525-92CD-0FB2F96558DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11EF6671-849B-464E-94D4-13A743E8F1BE}
