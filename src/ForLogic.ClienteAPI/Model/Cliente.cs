@@ -24,5 +24,6 @@ namespace ForLogic.ClienteAPI.Model
         [Column("data_insercao")]
         [DisplayFormat(DataFormatString = "dd/mm/yyyy")]
         public DateTime DataInsercao { get; set; }
+
     }
 }

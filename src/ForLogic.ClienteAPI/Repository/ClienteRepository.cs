@@ -25,19 +25,21 @@ namespace ForLogic.ClienteAPI.Repository
 
         public async Task<ClienteVO> ObterPorId(long id)
         {
-            Cliente cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync();
+            Cliente cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync() ?? new Cliente();
             return _mapper.Map<ClienteVO>(cliente);
         }
 
         public async Task<ClienteVO> ObterPorNomeCliente(string nomeCliente)
         {
-            Cliente cliente = await _context.Clientes.Where(c => c.NomeCliente == nomeCliente).FirstOrDefaultAsync();
+            Cliente cliente = await _context.Clientes.Where(c => c.NomeCliente == nomeCliente).FirstOrDefaultAsync() ?? new Cliente();
             return _mapper.Map<ClienteVO>(cliente);
         }
 
         public async Task<ClienteVO> Criar(ClienteVO vo)
         {
             Cliente cliente = _mapper.Map<Cliente>(vo);
+            if (_context.Clientes.Any(c => c.Cnpj == vo.Cnpj))
+                throw new Exception("Já existe Cliente cadastrado com o mesmo cnpj");
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
             return _mapper.Map<ClienteVO>(cliente);
@@ -55,9 +57,7 @@ namespace ForLogic.ClienteAPI.Repository
         {
             try
             {
-                Cliente cliente =
-                await _context.Clientes.Where(c => c.Id == id)
-                    .FirstOrDefaultAsync();
+                Cliente cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync() ?? new Cliente();
                 if (cliente == null) return false;
                 _context.Clientes.Remove(cliente);
                 await _context.SaveChangesAsync();
