@@ -1,45 +1,76 @@
 ﻿using AutoMapper;
 using ForLogic.ClienteAPI.Data.ValueObjects;
+using ForLogic.ClienteAPI.Model;
+using ForLogic.ClienteAPI.Model.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace ForLogic.ClienteAPI.Repository
 {
     public class ClienteRepository : IClienteRepository
     {
+        private readonly SQLContext _context;
         private IMapper _mapper;
 
-        public ClienteRepository(IMapper mapper)
+        public ClienteRepository(SQLContext context, IMapper mapper)
         {
+            _context = context;
             _mapper = mapper;
         }
 
-        public Task<ClienteVO> Atualizar(ClienteVO vo)
+        public async Task<IEnumerable<ClienteVO>> ObterTodos()
         {
-            throw new NotImplementedException();
+            List<Cliente> clientes = await _context.Clientes.ToListAsync();
+            return _mapper.Map<List<ClienteVO>>(clientes);
         }
 
-        public Task<ClienteVO> Criar(ClienteVO vo)
+        public async Task<ClienteVO> ObterPorId(long id)
         {
-            throw new NotImplementedException();
+            Cliente cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return _mapper.Map<ClienteVO>(cliente);
         }
 
-        public Task<bool> Deletar(long id)
+        public async Task<ClienteVO> ObterPorNomeCliente(string nomeCliente)
         {
-            throw new NotImplementedException();
+            Cliente cliente = await _context.Clientes.Where(c => c.NomeCliente == nomeCliente).FirstOrDefaultAsync();
+            return _mapper.Map<ClienteVO>(cliente);
         }
 
-        public Task<ClienteVO> ObterPorId(long id)
+        public async Task<ClienteVO> Criar(ClienteVO vo)
         {
-            throw new NotImplementedException();
+            Cliente cliente = _mapper.Map<Cliente>(vo);
+            _context.Clientes.Add(cliente);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<ClienteVO>(cliente);
         }
 
-        public Task<ClienteVO> ObterPorNomeCliente(string nomeCliente)
+        public async Task<ClienteVO> Atualizar(ClienteVO vo)
         {
-            throw new NotImplementedException();
+            Cliente cliente = _mapper.Map<Cliente>(vo);
+            _context.Clientes.Update(cliente);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<ClienteVO>(cliente);
         }
 
-        public Task<IEnumerable<ClienteVO>> ObterTodos()
+        public async Task<bool> Deletar(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Cliente cliente =
+                await _context.Clientes.Where(c => c.Id == id)
+                    .FirstOrDefaultAsync();
+                if (cliente == null) return false;
+                _context.Clientes.Remove(cliente);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
+
+
+
+
     }
 }
