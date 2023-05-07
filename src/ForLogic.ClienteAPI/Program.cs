@@ -1,3 +1,10 @@
+using AutoMapper;
+using ForLogic.ClienteAPI.Config;
+using ForLogic.ClienteAPI.Repository;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace ForLogic.ClienteAPI
 {
     public class Program
@@ -7,8 +14,15 @@ namespace ForLogic.ClienteAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+            builder.Services.AddSingleton(mapper);
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

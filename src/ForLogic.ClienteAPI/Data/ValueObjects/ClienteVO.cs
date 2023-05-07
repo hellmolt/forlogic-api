@@ -6,6 +6,6 @@
         public string NomeCliente { get; set; }
         public string NomeContato { get; set; }
         public string Cnpj { get; set; }
-        public string DataInsercao { get; set; }
+        public DateTime? DataInsercao { get; set; }
     }
 }
