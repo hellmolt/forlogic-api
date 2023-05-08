@@ -1,16 +1,18 @@
 ﻿using AutoMapper;
-using ForLogic.ClienteAPI.Data.ValueObjects;
-using ForLogic.ClienteAPI.Model;
+using ForLogic.AvaliacaoAPI.Data.ValueObjects;
+using ForLogic.AvaliacaoAPI.Model;
 
-namespace ForLogic.ClienteAPI.Config
+namespace ForLogic.AvaliacaoAPI.Config
 {
     public class MappingConfig
     {
         public static MapperConfiguration RegisterMaps()
         {
             var mappingConfig = new MapperConfiguration(config => {
-                config.CreateMap<AvaliacaoVO, Avaliacao>();
-                config.CreateMap<Avaliacao, AvaliacaoVO>();
+                config.CreateMap<ClienteVO, Cliente>().ReverseMap();
+                config.CreateMap<AvaliacaoVO, Avaliacao>().ReverseMap();
+                config.CreateMap<CategoriaNotaVO, CategoriaNota>().ReverseMap();
+                config.CreateMap<AvaliacaoClienteVO, AvaliacaoCliente>().ReverseMap();                          
             });
             return mappingConfig;
         }

@@ -1,3 +1,10 @@
+using AutoMapper;
+using ForLogic.AvaliacaoAPI.Config;
+using ForLogic.AvaliacaoAPI.Model.Context;
+using ForLogic.AvaliacaoAPI.Repository;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
 namespace ForLogic.AvaliacaoAPI
 {
     public class Program
@@ -5,10 +12,18 @@ namespace ForLogic.AvaliacaoAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connection = builder.Configuration["SQlConnection:SQlConnectionString"];
 
             // Add services to the container.
+            IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+            builder.Services.AddSingleton(mapper);
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            builder.Services.AddDbContext<SQLContext>(options => options.UseSqlServer(connection, o => o.MigrationsAssembly("ForLogic.AvaliacaoAPI")));
+
+            builder.Services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
             builder.Services.AddControllers();
+            
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

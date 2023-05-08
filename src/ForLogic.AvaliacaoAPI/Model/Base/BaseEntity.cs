@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ForLogic.ClienteAPI.Model.Base
+namespace ForLogic.AvaliacaoAPI.Model.Base
 {
     public class BaseEntity
     {

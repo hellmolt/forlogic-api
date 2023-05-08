@@ -1,11 +1,13 @@
-﻿namespace ForLogic.ClienteAPI.Data.ValueObjects
+﻿using ForLogic.AvaliacaoAPI.Data.ValueObjects;
+
+namespace ForLogic.AvaliacaoAPI.Data.ValueObjects
 {
     public class AvaliacaoVO
     {
         public long Id { get; set; }
-        public string NomeCliente { get; set; }
-        public string NomeContato { get; set; }
-        public string Cnpj { get; set; }
-        public DateTime? DataInsercao { get; set; }
+        public DateTime DataReferencia { get; set; }
+        public IList<AvaliacaoClienteVO> AvaliacoesDosClientes { get; set; }
+        public int Pontuacao { get; set; }
+
     }
 }

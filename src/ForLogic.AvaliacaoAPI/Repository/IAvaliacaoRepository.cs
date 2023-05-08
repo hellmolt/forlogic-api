@@ -1,13 +1,13 @@
-﻿using ForLogic.ClienteAPI.Data.ValueObjects;
+﻿using ForLogic.AvaliacaoAPI.Data.ValueObjects;
 
-namespace ForLogic.ClienteAPI.Repository
+namespace ForLogic.AvaliacaoAPI.Repository
 {
     public interface IAvaliacaoRepository
     {
         Task<IEnumerable<AvaliacaoVO>> ObterTodos();
-        Task<AvaliacaoVO> ObterPorId(long id);
-        Task<AvaliacaoVO> Criar(AvaliacaoVO vo);
-        Task<AvaliacaoVO> Atualizar(AvaliacaoVO vo);
-        Task<bool> Deletar(long id);
+        Task<IEnumerable<AvaliacaoVO>> ObterAvalicaoPorPeriodo(int mes, int ano);
+        Task<AvaliacaoVO> CriarAvalicao(AvaliacaoVO avaliacao);
+        Task<AvaliacaoVO> AtualizarAvalicao(AvaliacaoVO avaliacao);
+        Task<bool> RemoverAvalicao(long avaliacaoId);
     }
 }

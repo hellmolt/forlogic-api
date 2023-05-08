@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using ForLogic.ClienteAPI.Data.ValueObjects;
-using ForLogic.ClienteAPI.Model;
-using ForLogic.ClienteAPI.Model.Context;
+using ForLogic.AvaliacaoAPI.Data.ValueObjects;
+using ForLogic.AvaliacaoAPI.Model;
+using ForLogic.AvaliacaoAPI.Model.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace ForLogic.ClienteAPI.Repository
+namespace ForLogic.AvaliacaoAPI.Repository
 {
     public class AvaliacaoRepository : IAvaliacaoRepository
     {
@@ -19,47 +19,42 @@ namespace ForLogic.ClienteAPI.Repository
 
         public async Task<IEnumerable<AvaliacaoVO>> ObterTodos()
         {
-            List<Avaliacao> clientes = await _context.Clientes.ToListAsync();
-            return _mapper.Map<List<AvaliacaoVO>>(clientes);
+            List<Avaliacao> avaliacoes = await _context.Avaliacoes.ToListAsync();
+            return _mapper.Map<List<AvaliacaoVO>>(avaliacoes);
         }
 
-        public async Task<AvaliacaoVO> ObterPorId(long id)
+        public async Task<IEnumerable<AvaliacaoVO>> ObterAvalicaoPorPeriodo(int mes, int ano)
         {
-            Avaliacao cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync() ?? new Avaliacao();
-            return _mapper.Map<AvaliacaoVO>(cliente);
+            List<Avaliacao> avaliacoes = await _context.Avaliacoes.Where(a => 
+                a.DataReferencia.Year == ano && 
+                a.DataReferencia.Month == mes).ToListAsync();
+
+            return _mapper.Map<List<AvaliacaoVO>>(avaliacoes);
         }
 
-        public async Task<AvaliacaoVO> ObterPorNomeCliente(string nomeCliente)
+        public async Task<AvaliacaoVO> CriarAvalicao(AvaliacaoVO avaliacao)
         {
-            Avaliacao cliente = await _context.Clientes.Where(c => c.NomeCliente == nomeCliente).FirstOrDefaultAsync() ?? new Avaliacao();
-            return _mapper.Map<AvaliacaoVO>(cliente);
-        }
-
-        public async Task<AvaliacaoVO> Criar(AvaliacaoVO vo)
-        {
-            Avaliacao cliente = _mapper.Map<Avaliacao>(vo);
-            if (_context.Clientes.Any(c => c.Cnpj == vo.Cnpj))
-                throw new Exception("Já existe Cliente cadastrado com o mesmo cnpj");
-            _context.Clientes.Add(cliente);
+            Avaliacao avaliacaoParaCriar = _mapper.Map<Avaliacao>(avaliacao);
+            _context.Avaliacoes.Add(avaliacaoParaCriar);
             await _context.SaveChangesAsync();
-            return _mapper.Map<AvaliacaoVO>(cliente);
+            return _mapper.Map<AvaliacaoVO>(avaliacaoParaCriar);
         }
 
-        public async Task<AvaliacaoVO> Atualizar(AvaliacaoVO vo)
+        public async Task<AvaliacaoVO> AtualizarAvalicao(AvaliacaoVO avaliacao)
         {
-            Avaliacao cliente = _mapper.Map<Avaliacao>(vo);
-            _context.Clientes.Update(cliente);
+            Avaliacao avaliacaoParaAtualizar = _mapper.Map<Avaliacao>(avaliacao);
+            _context.Avaliacoes.Update(avaliacaoParaAtualizar);
             await _context.SaveChangesAsync();
-            return _mapper.Map<AvaliacaoVO>(cliente);
+            return _mapper.Map<AvaliacaoVO>(avaliacaoParaAtualizar);
         }
 
-        public async Task<bool> Deletar(long id)
+        public async Task<bool> RemoverAvalicao(long avaliacaoId)
         {
             try
             {
-                Avaliacao cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync() ?? new Avaliacao();
-                if (cliente == null) return false;
-                _context.Clientes.Remove(cliente);
+                Avaliacao avaliacaoParaDeletar = await _context.Avaliacoes.Where(a => a.Id == avaliacaoId).FirstOrDefaultAsync() ?? new Avaliacao();
+                if (avaliacaoParaDeletar == null) return false;
+                _context.Avaliacoes.Remove(avaliacaoParaDeletar);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -68,9 +63,5 @@ namespace ForLogic.ClienteAPI.Repository
                 return false;
             }
         }
-
-
-
-
     }
 }
