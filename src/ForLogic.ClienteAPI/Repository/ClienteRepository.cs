@@ -74,5 +74,11 @@ namespace ForLogic.ClienteAPI.Repository
             Cliente cliente = await _context.Clientes.Where(c => c.Cnpj == cnpj).FirstOrDefaultAsync();
             return _mapper.Map<ClienteVO>(cliente);
         }
+
+        public async Task<IEnumerable<ClienteVO>> PesquisarPorNome(string nome)
+        {
+            List<Cliente> cliente = await _context.Clientes.Where(c => c.NomeCliente.ToLower().StartsWith(nome.ToLower())).ToListAsync();
+            return _mapper.Map<List<ClienteVO>>(cliente);
+        }
     }
 }

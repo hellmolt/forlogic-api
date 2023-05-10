@@ -7,6 +7,7 @@ namespace ForLogic.ClienteAPI.Repository
         Task<IEnumerable<ClienteVO>> ObterTodos();
         Task<ClienteVO> ObterPorId(long id);
         Task<ClienteVO> ObterPorCnpj(string cnpj);
+        Task<IEnumerable<ClienteVO>> PesquisarPorNome(string nome);
         Task<ClienteVO> Criar(ClienteVO vo);
         Task<ClienteVO> Atualizar(ClienteVO vo);
         Task<bool> Deletar(long id);

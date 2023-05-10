@@ -44,6 +44,16 @@ namespace ForLogic.ClienteAPI.Controllers
             return Ok(cliente);
         }
 
+        [HttpGet("pesquisar-por-nome/{nome}")]
+        //[Authorize]
+        public async Task<ActionResult<IEnumerable<ClienteVO>>> PesquisarPorNome(string nome)
+        {
+            if(string.IsNullOrEmpty(nome)) return BadRequest();
+            var clientes =  await _repository.PesquisarPorNome(nome);
+            if (clientes == null) return NotFound();
+            return Ok(clientes);
+        }
+
         [HttpPost]
         //[Authorize]
         public async Task<ActionResult<ClienteVO>> Criar([FromBody] ClienteVO vo)
