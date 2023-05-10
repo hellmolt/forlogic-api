@@ -1,27 +1,24 @@
 ﻿using ForLogic.AvaliacaoAPI.Data.ValueObjects;
-using ForLogic.AvaliacaoAPI.Model;
 using ForLogic.AvaliacaoAPI.Repository;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ForLogic.AvaliacaoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AvaliacaoController : ControllerBase
+    public class AvaliacaoClienteController : ControllerBase
     {
-        private IAvaliacaoRepository _repository;
+        private IAvaliacaoClienteRepository _repository;
 
-        public AvaliacaoController(IAvaliacaoRepository repository)
+        public AvaliacaoClienteController(IAvaliacaoClienteRepository repository)
         {
             _repository = repository ?? throw new
                 ArgumentNullException(nameof(repository));
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AvaliacaoVO>>> ObterTodos()
+        public async Task<ActionResult<IEnumerable<AvaliacaoClienteVO>>> ObterTodos()
         {
             var avaliacoes = await _repository.ObterTodos();
             return Ok(avaliacoes);
@@ -29,18 +26,18 @@ namespace ForLogic.AvaliacaoAPI.Controllers
 
         [HttpGet("{mes}/{ano}")]
         //[Authorize]
-        public async Task<ActionResult<IEnumerable<AvaliacaoVO>>> ObterAvalicaoPorPeriodo(int mes, int ano)
+        public async Task<ActionResult<IEnumerable<AvaliacaoClienteVO>>> ObterAvalicoesDoscLientesPorPeriodo(int mes, int ano)
         {
-            var avaliacoes = await _repository.ObterAvalicaoPorPeriodo(mes, ano);
+            var avaliacoes = await _repository.ObterAvaliacoesDosClientesPorPeriodo(mes, ano);
             return Ok(avaliacoes);
         }
 
         [HttpPost()]
         //[Authorize]
-        public async Task<ActionResult<AvaliacaoVO>> CriarAvaliacao(AvaliacaoVO vo)
+        public async Task<ActionResult<AvaliacaoVO>> CriarAvaliacao(AvaliacaoClienteVO vo)
         {
             if (vo == null) return BadRequest();
-            var avaliacao = await _repository.CriarAvalicao(vo);
+            var avaliacao = await _repository.CriarAvalicaoDoCliente(vo);
             return Ok(avaliacao);
         }
     }

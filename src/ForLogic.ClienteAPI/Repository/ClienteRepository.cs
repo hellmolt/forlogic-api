@@ -25,13 +25,13 @@ namespace ForLogic.ClienteAPI.Repository
 
         public async Task<ClienteVO> ObterPorId(long id)
         {
-            Cliente cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync() ?? new Cliente();
+            Cliente cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync();
             return _mapper.Map<ClienteVO>(cliente);
         }
 
         public async Task<ClienteVO> ObterPorNomeCliente(string nomeCliente)
         {
-            Cliente cliente = await _context.Clientes.Where(c => c.NomeCliente == nomeCliente).FirstOrDefaultAsync() ?? new Cliente();
+            Cliente cliente = await _context.Clientes.Where(c => c.NomeCliente == nomeCliente).FirstOrDefaultAsync();
             return _mapper.Map<ClienteVO>(cliente);
         }
 
@@ -57,7 +57,7 @@ namespace ForLogic.ClienteAPI.Repository
         {
             try
             {
-                Cliente cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync() ?? new Cliente();
+                Cliente cliente = await _context.Clientes.Where(c => c.Id == id).FirstOrDefaultAsync();
                 if (cliente == null) return false;
                 _context.Clientes.Remove(cliente);
                 await _context.SaveChangesAsync();
@@ -69,8 +69,10 @@ namespace ForLogic.ClienteAPI.Repository
             }
         }
 
-
-
-
+        public async Task<ClienteVO> ObterPorCnpj(string cnpj)
+        {
+            Cliente cliente = await _context.Clientes.Where(c => c.Cnpj == cnpj).FirstOrDefaultAsync();
+            return _mapper.Map<ClienteVO>(cliente);
+        }
     }
 }
