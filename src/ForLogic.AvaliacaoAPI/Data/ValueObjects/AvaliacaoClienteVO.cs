@@ -1,10 +1,13 @@
-﻿namespace ForLogic.AvaliacaoAPI.Data.ValueObjects
+﻿using ForLogic.AvaliacaoAPI.Model;
+
+namespace ForLogic.AvaliacaoAPI.Data.ValueObjects
 {
     public class AvaliacaoClienteVO
     {
         public long Id { get; set; }
         public ClienteVO Cliente { get; set; }
         public AvaliacaoVO Avaliacao { get; set; }
+        public CategoriaNotaVO CategoriaNota { get; set; }
         public int Nota { get; set; }
         public string Motivo { get; set; }
         public DateTime DataAvaliacao { get; set; }

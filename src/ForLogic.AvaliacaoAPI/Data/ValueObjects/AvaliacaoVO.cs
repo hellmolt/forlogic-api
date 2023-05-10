@@ -6,7 +6,7 @@ namespace ForLogic.AvaliacaoAPI.Data.ValueObjects
     {
         public long Id { get; set; }
         public DateTime DataReferencia { get; set; }
-        public IList<AvaliacaoClienteVO> AvaliacoesDosClientes { get; set; }
+        public IEnumerable<AvaliacaoClienteVO> AvaliacoesDosClientes { get; set; }
         public int Pontuacao { get; set; }
 
     }

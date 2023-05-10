@@ -27,7 +27,7 @@ namespace ForLogic.ClienteAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<ClienteVO>> ObterPorId(long id)
         {
             var cliente = await _repository.ObterPorId(id);
@@ -35,8 +35,17 @@ namespace ForLogic.ClienteAPI.Controllers
             return Ok(cliente);
         }
 
+        [HttpGet("obter-por-cnpj/{cnpj}")]
+        //[Authorize]
+        public async Task<ActionResult<ClienteVO>> ObterPorCnpj(string cnpj)
+        {
+            var cliente = await _repository.ObterPorCnpj(cnpj);
+            if (cliente == null) return NotFound();
+            return Ok(cliente);
+        }
+
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<ClienteVO>> Criar([FromBody] ClienteVO vo)
         {
             if (vo == null) return BadRequest();
@@ -45,7 +54,7 @@ namespace ForLogic.ClienteAPI.Controllers
         }
 
         [HttpPut]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<ClienteVO>> Atualizar([FromBody] ClienteVO vo)
         {
             if (vo == null) return BadRequest();

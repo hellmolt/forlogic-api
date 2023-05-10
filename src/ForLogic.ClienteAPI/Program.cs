@@ -18,6 +18,7 @@ namespace ForLogic.ClienteAPI
 
             var builder = WebApplication.CreateBuilder(args);
             var connection = builder.Configuration["SQlConnection:SQlConnectionString"];
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
             // Add services to the container.
             IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
@@ -36,6 +37,16 @@ namespace ForLogic.ClienteAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ForLogic Client API", Version = "v1" });
             });
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.AllowAnyOrigin()
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader();
+                                  });
+            });
 
             var app = builder.Build();
 
@@ -50,7 +61,7 @@ namespace ForLogic.ClienteAPI
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseAuthorization();
 
 

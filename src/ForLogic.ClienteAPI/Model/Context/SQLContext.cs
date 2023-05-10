@@ -16,7 +16,7 @@ namespace ForLogic.ClienteAPI.Model.Context
                 Id = 1,
                 NomeCliente = "Cliente A",
                 NomeContato = "Cliente A Contato",
-                Cnpj = "XX.XXX.XXX/0001-XX",
+                Cnpj = "11111111000111",
                 DataInsercao = DateTime.Now
             });
             modelBuilder.Entity<Cliente>().HasData(new Cliente
